@@ -49,8 +49,14 @@ const year = new Date().getFullYear();
         <h3 class="footer__heading">Contact</h3>
         <ul role="list">
           <li><a href={projectMailto}>{site.email}</a></li>
-          <li><a href={site.phoneHref}>{site.phone}</a></li>
-          <li><span>{site.location}</span></li>
+          <li><a href={site.phoneHref}>T: {site.phone}</a></li>
+          <li>
+            <address class="footer__address">
+              {site.address.region}<br />
+              {site.address.street},<br />
+              {site.address.city}, {site.address.postalCode}
+            </address>
+          </li>
         </ul>
         <h3 class="footer__heading footer__heading--social">Follow</h3>
         <ul role="list" class="footer__socials">
@@ -155,6 +161,12 @@ const year = new Date().getFullYear();
   .footer__col a:hover {
     color: var(--c-ink);
     transform: translateX(0.3rem);
+  }
+
+  .footer__address {
+    font-style: normal;
+    line-height: 1.5;
+    color: var(--c-ink-2);
   }
 
   .footer__socials {

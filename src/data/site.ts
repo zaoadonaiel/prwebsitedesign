@@ -12,11 +12,17 @@ export const site = {
   tagline: 'Websites that make your business impossible to ignore.',
   locale: 'en_US',
   ogImage: '/images/og-image.png',
-  // Placeholder contact details — replace before launch.
+  // Placeholder email — replace before launch.
   email: 'hello@prwebsitedesign.com',
-  phone: '+1 (000) 000-0000',
-  phoneHref: 'tel:+10000000000',
-  location: 'Remote studio — working worldwide',
+  phone: '+1 939 229 9233',
+  phoneHref: 'tel:+19392299233',
+  address: {
+    street: 'S, 72 Calle 65 De Infanteria #117',
+    city: 'Lajas',
+    postalCode: '00667',
+    region: 'Puerto Rico',
+    country: 'PR',
+  },
 } as const;
 
 export const projectMailto = `mailto:${site.email}?subject=${encodeURIComponent('New project enquiry')}`;
