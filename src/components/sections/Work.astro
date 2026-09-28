@@ -19,12 +19,11 @@ const images = {
   <div class="container">
     <header class="work__head">
       <p class="eyebrow" data-reveal>Selected work</p>
-      <div class="work__head-row">
-        <h2 class="display-lg" id="work-title" data-split>
-          Concepts that show <span class="accent-text">what's possible.</span>
-        </h2>
-        <span class="work__count" aria-hidden="true">({String(projects.length).padStart(2, '0')})</span>
-      </div>
+      <h2 class="display-lg" id="work-title" data-split>
+        Concepts that show <span class="accent-text">what's possible.</span><sup class="work__count" aria-hidden="true"
+          >({String(projects.length).padStart(2, '0')})</sup
+        >
+      </h2>
       <p class="work__note" data-reveal>
         These are <strong>original concept projects</strong> created in our studio to demonstrate range across
         industries — not client work. Real case studies are shared privately on request.
@@ -63,22 +62,19 @@ const images = {
     margin-bottom: clamp(3rem, 7vw, 6rem);
   }
 
-  .work__head-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.2rem;
-  }
-
   .work__head h2 {
     max-width: 13ch;
   }
 
   .work__count {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
+    margin-left: 0.3em;
+    font-size: 0.3em;
     font-weight: 500;
-    color: var(--c-accent-deep);
-    margin-top: 0.4rem;
+    letter-spacing: 0;
+    vertical-align: top;
+    position: relative;
+    top: 0.5em;
+    color: var(--c-muted);
   }
 
   .work__note {
