@@ -1,0 +1,68 @@
+/*
+ * PR Website Design — design tokens
+ * Palette: warm ivory paper, charcoal ink, "Signal" vermilion accent,
+ * supported by four soft pastels used for surfaces and illustration.
+ */
+:root {
+  /* Surfaces */
+  --c-bg: #f7f2ea;
+  --c-bg-raised: #fcf9f4;
+  --c-sand: #efe7da;
+  --c-sand-deep: #e5dac8;
+
+  /* Ink */
+  --c-ink: #1c1b18;
+  --c-ink-2: #45413a;
+  --c-muted: #6b665c;
+  --c-line: rgb(28 27 24 / 0.12);
+  --c-line-strong: rgb(28 27 24 / 0.24);
+
+  /* Brand accent — "Signal" vermilion */
+  --c-accent: #ff5a1f;
+  --c-accent-deep: #c2390b; /* AA on ivory for small text */
+  --c-accent-soft: #ffe3d6;
+
+  /* Pastels */
+  --c-peach: #ffd9c4;
+  --c-mint: #cfe7d6;
+  --c-butter: #f7e6a4;
+  --c-sky: #d3e1f3;
+  --c-blush: #f5d5d0;
+
+  /* Type */
+  --f-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --f-body: 'Instrument Sans', 'Helvetica Neue', Arial, system-ui, sans-serif;
+
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.9rem;
+  --fs-base: clamp(1rem, 0.96rem + 0.18vw, 1.1rem);
+  --fs-lg: clamp(1.12rem, 1.04rem + 0.4vw, 1.35rem);
+  --fs-xl: clamp(1.4rem, 1.2rem + 0.9vw, 2rem);
+  --fs-2xl: clamp(1.9rem, 1.4rem + 2.2vw, 3.2rem);
+  --fs-3xl: clamp(2.5rem, 1.6rem + 4vw, 5.2rem);
+  --fs-4xl: clamp(2.8rem, 1rem + 5.7vw, 7.6rem);
+
+  /* Layout */
+  --container: 1440px;
+  --gutter: clamp(1rem, 3.6vw, 3.5rem);
+  --section-y: clamp(5rem, 3rem + 8vw, 11rem);
+  --header-h: 84px;
+
+  /* Shape */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-pill: 999px;
+
+  /* Depth */
+  --shadow-sm: 0 1px 2px rgb(60 40 20 / 0.06), 0 4px 12px -6px rgb(60 40 20 / 0.12);
+  --shadow-md: 0 2px 4px rgb(60 40 20 / 0.04), 0 24px 48px -24px rgb(60 40 20 / 0.28);
+  --shadow-lg: 0 3px 6px rgb(60 40 20 / 0.04), 0 40px 80px -30px rgb(60 40 20 / 0.35);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.25s;
+  --dur: 0.5s;
+  --dur-slow: 0.9s;
+}

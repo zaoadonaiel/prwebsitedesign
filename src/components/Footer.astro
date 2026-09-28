@@ -1,0 +1,240 @@
+---
+import { ArrowUp } from '@lucide/astro';
+import Logo from './Logo.astro';
+import { navLinks, projectMailto, services, site, socials } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" aria-labelledby="footer-title">
+  <h2 class="sr-only" id="footer-title">Site footer</h2>
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <Logo size="lg" />
+        <p>
+          An independent web design and development studio creating custom websites that help ambitious businesses
+          stand out, earn trust and grow.
+        </p>
+        <a class="footer__email" href={projectMailto}>{site.email}</a>
+      </div>
+
+      <nav class="footer__col" aria-label="Footer navigation">
+        <h3 class="footer__heading">Navigate</h3>
+        <ul role="list">
+          {
+            navLinks.map((l) => (
+              <li>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h3 class="footer__heading">Services</h3>
+        <ul role="list">
+          {
+            services.map((s) => (
+              <li>
+                <a href="/#services">{s.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__heading">Contact</h3>
+        <ul role="list">
+          <li><a href={projectMailto}>{site.email}</a></li>
+          <li><a href={site.phoneHref}>{site.phone}</a></li>
+          <li><span>{site.location}</span></li>
+        </ul>
+        <h3 class="footer__heading footer__heading--social">Follow</h3>
+        <ul role="list" class="footer__socials">
+          {
+            socials.map((s) => (
+              <li>
+                <a href={s.href} rel="noopener">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer__word" aria-hidden="true" data-split>
+      <span>PR</span> Website Design
+    </p>
+
+    <div class="footer__bottom">
+      <p>© {year} PR Website Design. All rights reserved.</p>
+      <p class="footer__made">Designed &amp; built in-house with care.</p>
+      <a class="footer__top-link" href="#top">
+        Back to top
+        <span aria-hidden="true"><ArrowUp size={16} /></span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding-top: clamp(4rem, 8vw, 7rem);
+    padding-bottom: 1.5rem;
+    border-top: 1px solid var(--c-line);
+    overflow: hidden;
+  }
+
+  .footer__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: 3rem clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .footer__brand {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 1.4rem;
+  }
+
+  .footer__brand p {
+    color: var(--c-ink-2);
+    max-width: 36ch;
+  }
+
+  .footer__email {
+    font-family: var(--f-display);
+    font-size: clamp(1.05rem, 0.7rem + 0.9vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    background: linear-gradient(var(--c-accent), var(--c-accent)) 0 100% / 100% 2px no-repeat;
+    padding-bottom: 0.1rem;
+    transition: background-size 0.5s var(--ease-out);
+    overflow-wrap: anywhere;
+  }
+
+  .footer__email:hover {
+    background-size: 0 2px;
+    background-position: 100% 100%;
+  }
+
+  .footer__heading {
+    font-family: var(--f-body);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: 1.1rem;
+  }
+
+  .footer__heading--social {
+    margin-top: 2rem;
+  }
+
+  .footer__col ul {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .footer__col a,
+  .footer__col span {
+    position: relative;
+    display: inline-block;
+    color: var(--c-ink-2);
+    transition: color var(--dur-fast) var(--ease-out), transform 0.4s var(--ease-out);
+  }
+
+  .footer__col a:hover {
+    color: var(--c-ink);
+    transform: translateX(0.3rem);
+  }
+
+  .footer__socials {
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 1.4rem !important;
+  }
+
+  /* Giant wordmark */
+  .footer__word {
+    margin-block: clamp(3rem, 7vw, 6rem) clamp(1rem, 2vw, 2rem);
+    font-family: var(--f-display);
+    font-size: clamp(2rem, 11.2vw, 12.6rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    white-space: nowrap;
+    color: var(--c-ink);
+  }
+
+  .footer__word span {
+    color: var(--c-accent);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--c-line);
+    font-size: var(--fs-sm);
+    color: var(--c-muted);
+  }
+
+  .footer__top-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+
+  .footer__top-link span {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: 1px solid var(--c-line-strong);
+    transition: transform 0.5s var(--ease-out), background-color 0.3s, color 0.3s;
+  }
+
+  .footer__top-link:hover span {
+    transform: translateY(-4px);
+    background: var(--c-ink);
+    color: var(--c-bg);
+  }
+
+  @media (max-width: 1000px) {
+    .footer__top {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer__top {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer__col:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .footer__made {
+      display: none;
+    }
+  }
+</style>

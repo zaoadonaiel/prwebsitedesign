@@ -1,0 +1,177 @@
+---
+import WorkCard from '../WorkCard.astro';
+import Button from '../Button.astro';
+import { projects } from '../../data/site';
+import mossMineral from '../../assets/work/moss-mineral.png';
+import atelierNord from '../../assets/work/atelier-nord.png';
+import ledgerline from '../../assets/work/ledgerline.png';
+import fournee from '../../assets/work/fournee.png';
+
+const images = {
+  'moss-mineral': mossMineral,
+  'atelier-nord': atelierNord,
+  ledgerline,
+  fournee,
+} as const;
+---
+
+<section class="section work" id="work" aria-labelledby="work-title">
+  <div class="container">
+    <header class="work__head">
+      <p class="eyebrow" data-reveal>Selected work</p>
+      <div class="work__head-row">
+        <h2 class="display-lg" id="work-title" data-split>
+          Concepts that show <span class="accent-text">what's possible.</span>
+        </h2>
+        <span class="work__count" aria-hidden="true">({String(projects.length).padStart(2, '0')})</span>
+      </div>
+      <p class="work__note" data-reveal>
+        These are <strong>original concept projects</strong> created in our studio to demonstrate range across
+        industries — not client work. Real case studies are shared privately on request.
+      </p>
+    </header>
+
+    <div class="work__grid">
+      {
+        projects.map((project, i) => (
+          <div class:list={['work__item', `work__item--${project.layout}`]} data-reveal>
+            <WorkCard project={project} image={images[project.slug as keyof typeof images]} index={i} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="work__outro" data-reveal>
+      <p>Your project could be the next one we are proud to show.</p>
+      <Button href="/#contact" variant="outline">Start Your Project</Button>
+    </div>
+  </div>
+
+  <div class="work-cursor" data-work-cursor aria-hidden="true">
+    <span data-work-cursor-label>Concept</span>
+  </div>
+</section>
+
+<style>
+  .work {
+    padding-top: calc(var(--section-y) * 0.8);
+  }
+
+  .work__head {
+    display: grid;
+    gap: 1.4rem;
+    margin-bottom: clamp(3rem, 7vw, 6rem);
+  }
+
+  .work__head-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .work__head h2 {
+    max-width: 13ch;
+  }
+
+  .work__count {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--c-accent-deep);
+    margin-top: 0.4rem;
+  }
+
+  .work__note {
+    max-width: 52ch;
+    color: var(--c-ink-2);
+    padding-left: 1rem;
+    border-left: 2px solid var(--c-accent);
+  }
+
+  .work__note strong {
+    color: var(--c-ink);
+    font-weight: 600;
+  }
+
+  .work__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2.4vw, 2.2rem);
+    row-gap: clamp(4rem, 8vw, 7rem);
+  }
+
+  .work__item--wide {
+    grid-column: 1 / span 7;
+  }
+
+  .work__item--tall {
+    grid-column: 9 / span 4;
+    margin-top: clamp(4rem, 14vw, 13rem);
+  }
+
+  .work__item--narrow {
+    grid-column: 2 / span 5;
+  }
+
+  .work__item--offset {
+    grid-column: 7 / span 6;
+    margin-top: clamp(-7rem, -6vw, -2rem);
+  }
+
+  .work__outro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: clamp(4rem, 8vw, 7rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--c-line-strong);
+  }
+
+  .work__outro p {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    max-width: 26ch;
+  }
+
+  /* Cursor follower (pointer: fine only, positioned by JS) */
+  .work-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 80;
+    pointer-events: none;
+    display: grid;
+    place-items: center;
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: -3.25rem 0 0 -3.25rem;
+    border-radius: 50%;
+    background: var(--c-accent);
+    color: var(--c-ink);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .work-cursor {
+      display: none;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .work__item--wide,
+    .work__item--tall,
+    .work__item--narrow,
+    .work__item--offset {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+  }
+</style>

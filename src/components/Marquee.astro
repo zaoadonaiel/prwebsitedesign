@@ -1,0 +1,99 @@
+---
+interface Props {
+  items: string[];
+  variant?: 'accent' | 'ink';
+  tilt?: number;
+  label?: string;
+}
+const { items, variant = 'accent', tilt = -2, label } = Astro.props;
+---
+
+<div class:list={['marquee', `marquee--${variant}`]} style={`--tilt:${tilt}deg`} data-marquee>
+  {label && <p class="sr-only">{label}</p>}
+  <div class="marquee__track" aria-hidden="true">
+    {
+      [0, 1].map(() => (
+        <ul role="list" class="marquee__group">
+          {items.map((item) => (
+            <li>
+              <span>{item}</span>
+              <svg viewBox="0 0 40 40" class="marquee__star">
+                <path d="M20 0c1.6 10.2 9.8 18.4 20 20-10.2 1.6-18.4 9.8-20 20-1.6-10.2-9.8-18.4-20-20C10.2 18.4 18.4 10.2 20 0z" />
+              </svg>
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .marquee {
+    --bg: var(--c-accent);
+    --fg: var(--c-ink);
+    --star: var(--c-bg-raised);
+    position: relative;
+    z-index: 2;
+    margin-inline: -4vw;
+    padding-block: clamp(0.9rem, 1.6vw, 1.4rem);
+    background: var(--bg);
+    color: var(--fg);
+    transform: rotate(var(--tilt));
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .marquee--ink {
+    --bg: var(--c-ink);
+    --fg: var(--c-bg);
+    --star: var(--c-accent);
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 38s linear infinite;
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .marquee__group {
+    display: flex;
+    flex: none;
+  }
+
+  .marquee__group li {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    padding-right: clamp(1.2rem, 2.4vw, 2.2rem);
+    font-family: var(--f-display);
+    font-size: clamp(1.5rem, 1rem + 2.4vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .marquee__star {
+    width: 0.62em;
+    height: 0.62em;
+    fill: var(--star);
+    flex: none;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

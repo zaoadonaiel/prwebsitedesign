@@ -1,0 +1,24 @@
+{
+  "name": "prwebsitedesign",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PR Website Design — premium web design & development studio website.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "assets": "node tools/generate-assets.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@lucide/astro": "^1.48.0",
+    "astro": "^7.3.5",
+    "gsap": "^3.15.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

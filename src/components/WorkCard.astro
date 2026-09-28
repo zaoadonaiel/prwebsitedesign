@@ -1,0 +1,262 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { Project } from '../data/site';
+
+interface Props {
+  project: Project;
+  image: ImageMetadata;
+  index: number;
+}
+
+const { project, image, index } = Astro.props;
+const sizes =
+  project.layout === 'wide'
+    ? '(max-width: 800px) 92vw, 60vw'
+    : '(max-width: 800px) 92vw, 44vw';
+---
+
+<article
+  class:list={['work-card', `work-card--${project.layout}`]}
+  style={`--tint:${project.tint}`}
+  data-work-card
+  data-parallax={project.layout === 'tall' || project.layout === 'offset' ? '' : undefined}
+>
+  <div class="work-card__media" data-cursor="Concept">
+    <div class="work-card__frame">
+      <div class="work-card__chrome" aria-hidden="true">
+        <span class="work-card__dots"><i></i><i></i><i></i></span>
+        <span class="work-card__url">{project.slug}.concept</span>
+      </div>
+      <div class="work-card__shot" data-work-shot>
+        <Picture
+          src={image}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[480, 800, 1200, 1600]}
+          sizes={sizes}
+          alt={`Homepage design concept for ${project.title}, ${project.category.toLowerCase()}.`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+    <span class="work-card__badge">Concept project</span>
+  </div>
+
+  <div class="work-card__meta">
+    <div>
+      <p class="work-card__cat">{project.category}</p>
+      <h3 class="work-card__title">{project.title}</h3>
+    </div>
+    <span class="work-card__index" aria-hidden="true">({String(index + 1).padStart(2, '0')})</span>
+  </div>
+  <p class="work-card__desc">{project.description}</p>
+  <ul role="list" class="work-card__tags" aria-label="Scope">
+    {project.services.map((s) => <li>{s}</li>)}
+  </ul>
+</article>
+
+<style>
+  .work-card {
+    position: relative;
+  }
+
+  .work-card__media {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    border-radius: var(--r-md);
+    background: var(--tint);
+    overflow: hidden;
+    isolation: isolate;
+    transition: border-radius 0.8s var(--ease-out);
+  }
+
+  .work-card--tall .work-card__media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .work-card--narrow .work-card__media {
+    aspect-ratio: 1 / 1;
+  }
+
+  .work-card--offset .work-card__media {
+    aspect-ratio: 5 / 4;
+  }
+
+  /* Soft light that follows the tint */
+  .work-card__media::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 80% 10%, rgb(255 255 255 / 0.55), transparent 45%),
+      radial-gradient(circle at 10% 90%, rgb(28 27 24 / 0.07), transparent 50%);
+    transition: transform 1.2s var(--ease-out);
+  }
+
+  .work-card:hover .work-card__media::before {
+    transform: translate(-6%, 6%);
+  }
+
+  .work-card__frame {
+    position: absolute;
+    top: 11%;
+    left: 9%;
+    width: 112%;
+    border-radius: 10px 0 0 0;
+    background: var(--c-bg-raised);
+    box-shadow:
+      0 0 0 1px rgb(28 27 24 / 0.08),
+      var(--shadow-lg);
+    overflow: hidden;
+    transform-origin: top left;
+    transition: transform 1s var(--ease-out);
+  }
+
+  .work-card--tall .work-card__frame,
+  .work-card--narrow .work-card__frame {
+    width: 170%;
+  }
+
+  .work-card:hover .work-card__frame {
+    transform: translate(-3%, -3%) rotate(-1deg);
+  }
+
+  .work-card__chrome {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid var(--c-line);
+    background: #f2ece2;
+  }
+
+  .work-card__dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .work-card__dots i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--c-sand-deep);
+  }
+
+  .work-card__url {
+    font-size: 0.72rem;
+    color: var(--c-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .work-card__shot {
+    overflow: hidden;
+  }
+
+  .work-card__shot :global(img) {
+    width: 100%;
+    height: auto;
+    transform-origin: top left;
+    transition: transform 1.2s var(--ease-out);
+  }
+
+  .work-card:hover .work-card__shot :global(img) {
+    transform: scale(1.04);
+  }
+
+  .work-card__badge {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--r-pill);
+    background: rgb(252 249 244 / 0.86);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 1px var(--c-line);
+  }
+
+  .work-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+
+  .work-card__cat {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--c-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .work-card__title {
+    position: relative;
+    display: inline-block;
+    font-size: var(--fs-2xl);
+    letter-spacing: -0.035em;
+  }
+
+  .work-card__title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.05em;
+    height: 0.07em;
+    background: var(--c-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.7s var(--ease-out);
+  }
+
+  .work-card:hover .work-card__title::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .work-card__index {
+    font-family: var(--f-display);
+    font-size: 1rem;
+    color: var(--c-muted);
+    padding-top: 0.2rem;
+  }
+
+  .work-card__desc {
+    max-width: 48ch;
+    margin-top: 0.8rem;
+    color: var(--c-ink-2);
+  }
+
+  .work-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    margin-top: 1rem;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-ink-2);
+  }
+
+  .work-card__tags li + li::before {
+    content: '/';
+    margin-right: 1rem;
+    color: var(--c-accent);
+  }
+
+  @media (hover: none) {
+    .work-card__title::after {
+      display: none;
+    }
+  }
+</style>

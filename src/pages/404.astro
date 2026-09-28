@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Page not found — PR Website Design" description="The page you were looking for could not be found." noindex>
+  <section class="nf container">
+    <p class="eyebrow">Error 404</p>
+    <h1 class="nf__title">This page wandered <span>off the grid.</span></h1>
+    <p class="lede">The link may be broken or the page may have moved. Let's get you back somewhere useful.</p>
+    <div class="nf__actions">
+      <Button href="/">Back to home</Button>
+      <Button href="/#contact" variant="outline">Start a project</Button>
+    </div>
+    <span class="nf__num" aria-hidden="true">404</span>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    position: relative;
+    min-height: 88svh;
+    display: grid;
+    align-content: center;
+    gap: 1.6rem;
+    padding-top: calc(var(--header-h) + 3rem);
+    padding-bottom: 4rem;
+    isolation: isolate;
+  }
+
+  .nf__title {
+    font-size: var(--fs-4xl);
+    font-weight: 650;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    max-width: 12ch;
+  }
+
+  .nf__title span {
+    color: var(--c-accent);
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .nf__num {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 2rem;
+    z-index: -1;
+    font-family: var(--f-display);
+    font-size: clamp(8rem, 30vw, 26rem);
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--c-line-strong);
+  }
+</style>

@@ -1,0 +1,795 @@
+---
+/**
+ * Layered hero composition built entirely with HTML/CSS/SVG (no images).
+ * Structure per floating element:
+ *   .hv__layer  → mouse / scroll parallax (GSAP)
+ *   .hv__enter  → one-off CSS entrance
+ *   .hv__float  → continuous CSS float
+ * Everything scales with the container via `cqi` units.
+ */
+---
+
+<div class="hv" data-hero-visual aria-hidden="true">
+  <div class="hv__glow hv__glow--a"></div>
+  <div class="hv__glow hv__glow--b"></div>
+  <div class="hv__glow hv__glow--c"></div>
+  <div class="hv__dots"></div>
+
+  <!-- Main browser window -->
+  <div class="hv__layer hv__layer--browser" data-depth="0.35">
+    <div class="hv__enter" style="--d:.35s">
+      <div class="hv__float" style="--float-dur:9s">
+        <div class="browser">
+          <div class="browser__bar">
+            <span class="browser__dots"><i></i><i></i><i></i></span>
+            <span class="browser__url">yourbrand.com</span>
+            <span class="browser__spacer"></span>
+          </div>
+          <div class="browser__page">
+            <div class="mini-nav">
+              <span class="mini-nav__logo"></span>
+              <span class="mini-nav__links"><i></i><i></i><i></i></span>
+              <span class="mini-nav__cta"></span>
+            </div>
+            <div class="mini-hero">
+              <div class="mini-hero__copy">
+                <span class="mini-hero__tag">New collection</span>
+                <p class="mini-hero__title">Make it<br />memorable.</p>
+                <span class="mini-hero__line"></span>
+                <span class="mini-hero__line mini-hero__line--short"></span>
+                <span class="mini-hero__btn">Shop now</span>
+              </div>
+              <div class="mini-hero__art">
+                <span class="art__sun"></span>
+                <span class="art__arch art__arch--1"></span>
+                <span class="art__arch art__arch--2"></span>
+                <span class="art__hill"></span>
+              </div>
+            </div>
+            <div class="mini-cards">
+              <span style="--bg: var(--c-butter)"></span>
+              <span style="--bg: var(--c-sky)"></span>
+              <span style="--bg: var(--c-blush)"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div class="hv__layer hv__layer--phone" data-depth="0.8">
+    <div class="hv__enter" style="--d:.6s">
+      <div class="hv__float" style="--float-dur:7s; --float-delay:-2s">
+        <div class="phone">
+          <span class="phone__notch"></span>
+          <div class="phone__screen">
+            <div class="phone__art">
+              <span class="phone__circle"></span>
+              <span class="phone__square"></span>
+            </div>
+            <span class="phone__title"></span>
+            <span class="phone__line"></span>
+            <span class="phone__line phone__line--short"></span>
+            <div class="phone__row">
+              <span></span><span></span>
+            </div>
+            <span class="phone__btn"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Palette card -->
+  <div class="hv__layer hv__layer--palette" data-depth="1.2">
+    <div class="hv__enter" style="--d:.8s">
+      <div class="hv__float" style="--float-dur:8s; --float-delay:-4s">
+        <div class="chip palette">
+          <span class="chip__label">Palette</span>
+          <span class="palette__swatches">
+            <i style="--c: var(--c-bg)"></i>
+            <i style="--c: var(--c-accent)"></i>
+            <i style="--c: var(--c-ink)"></i>
+            <i style="--c: var(--c-mint)"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Type specimen card -->
+  <div class="hv__layer hv__layer--type" data-depth="1">
+    <div class="hv__enter" style="--d:.95s">
+      <div class="hv__float" style="--float-dur:10s; --float-delay:-1s">
+        <div class="chip type">
+          <span class="type__aa">Aa</span>
+          <span class="type__meta">
+            <span class="chip__label">Display</span>
+            <span class="type__weights"><b>600</b> / 400</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rotating badge -->
+  <div class="hv__layer hv__layer--badge" data-depth="0.6">
+    <div class="hv__enter" style="--d:1.05s">
+      <div class="badge">
+        <svg class="badge__ring" viewBox="0 0 120 120">
+          <defs>
+            <path id="hv-circle" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"></path>
+          </defs>
+          <text>
+            <textPath href="#hv-circle">Design • Develop • Launch • Grow •</textPath>
+          </text>
+        </svg>
+        <svg class="badge__star" viewBox="0 0 40 40">
+          <path d="M20 0c1.6 10.2 9.8 18.4 20 20-10.2 1.6-18.4 9.8-20 20-1.6-10.2-9.8-18.4-20-20C10.2 18.4 18.4 10.2 20 0z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multiplayer-style cursor -->
+  <div class="hv__layer hv__layer--cursor" data-depth="1.5">
+    <div class="hv__enter" style="--d:1.3s">
+      <div class="cursor-tag">
+        <svg viewBox="0 0 24 24" class="cursor-tag__arrow">
+          <path d="M3 2l17 7.5-7.4 2.1L9.6 19z"></path>
+        </svg>
+        <span class="cursor-tag__label">Designer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sparkles -->
+  <svg class="hv__spark hv__spark--1" viewBox="0 0 40 40"
+    ><path d="M20 0c1.6 10.2 9.8 18.4 20 20-10.2 1.6-18.4 9.8-20 20-1.6-10.2-9.8-18.4-20-20C10.2 18.4 18.4 10.2 20 0z"
+    ></path></svg
+  >
+  <svg class="hv__spark hv__spark--2" viewBox="0 0 40 40"
+    ><path d="M20 0c1.6 10.2 9.8 18.4 20 20-10.2 1.6-18.4 9.8-20 20-1.6-10.2-9.8-18.4-20-20C10.2 18.4 18.4 10.2 20 0z"
+    ></path></svg
+  >
+</div>
+
+<style>
+  .hv {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1.02;
+    container-type: inline-size;
+    user-select: none;
+  }
+
+  /* Background atmosphere */
+  .hv__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(8cqi);
+    animation: drift 18s var(--ease-in-out) infinite alternate;
+  }
+
+  .hv__glow--a {
+    width: 70cqi;
+    height: 70cqi;
+    top: 2%;
+    right: -8%;
+    background: var(--c-peach);
+  }
+
+  .hv__glow--b {
+    width: 55cqi;
+    height: 55cqi;
+    bottom: 0;
+    left: 0;
+    background: var(--c-mint);
+    animation-duration: 22s;
+    animation-delay: -6s;
+  }
+
+  .hv__glow--c {
+    width: 40cqi;
+    height: 40cqi;
+    top: 40%;
+    left: 35%;
+    background: var(--c-butter);
+    opacity: 0.8;
+    animation-duration: 16s;
+    animation-delay: -3s;
+  }
+
+  .hv__dots {
+    position: absolute;
+    inset: 6% 2% 10% 8%;
+    background-image: radial-gradient(circle, rgb(28 27 24 / 0.16) 1px, transparent 1.4px);
+    background-size: 3.2cqi 3.2cqi;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 72%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 72%);
+  }
+
+  @keyframes drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    100% {
+      transform: translate3d(-6%, 5%, 0) scale(1.08);
+    }
+  }
+
+  /* Layer system */
+  .hv__layer {
+    position: absolute;
+    will-change: transform;
+  }
+
+  .hv__enter {
+    animation: hv-in 1.2s var(--ease-out) both;
+    animation-delay: var(--d, 0s);
+  }
+
+  .hv__float {
+    animation: float var(--float-dur, 8s) var(--ease-in-out) infinite alternate;
+    animation-delay: var(--float-delay, 0s);
+  }
+
+  @keyframes hv-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 12cqi, 0) rotate(-3deg) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes float {
+    from {
+      transform: translate3d(0, -1.4cqi, 0) rotate(-0.6deg);
+    }
+    to {
+      transform: translate3d(0, 1.4cqi, 0) rotate(0.6deg);
+    }
+  }
+
+  /* ---------- Browser ---------- */
+  .hv__layer--browser {
+    top: 13%;
+    left: 4%;
+    width: 84%;
+  }
+
+  .browser {
+    background: var(--c-bg-raised);
+    border-radius: 2.2cqi;
+    box-shadow:
+      0 0 0 1px rgb(28 27 24 / 0.08),
+      var(--shadow-lg);
+    overflow: hidden;
+    transform: rotate(-2deg);
+  }
+
+  .browser__bar {
+    display: flex;
+    align-items: center;
+    gap: 2cqi;
+    padding: 1.8cqi 2.4cqi;
+    border-bottom: 1px solid var(--c-line);
+    background: #f3ede3;
+  }
+
+  .browser__dots {
+    display: flex;
+    gap: 0.9cqi;
+  }
+
+  .browser__dots i {
+    width: 1.5cqi;
+    height: 1.5cqi;
+    border-radius: 50%;
+    background: var(--c-sand-deep);
+  }
+
+  .browser__dots i:first-child {
+    background: var(--c-accent);
+  }
+
+  .browser__url {
+    flex: 1;
+    max-width: 45%;
+    margin-inline: auto;
+    padding: 0.6cqi 2cqi;
+    border-radius: 99px;
+    background: var(--c-bg-raised);
+    font-size: 1.9cqi;
+    color: var(--c-muted);
+    text-align: center;
+  }
+
+  .browser__spacer {
+    width: 6cqi;
+  }
+
+  .browser__page {
+    padding: 2.6cqi 3.4cqi 3.4cqi;
+  }
+
+  .mini-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3.6cqi;
+  }
+
+  .mini-nav__logo {
+    width: 7cqi;
+    height: 2.2cqi;
+    border-radius: 99px;
+    background: var(--c-ink);
+  }
+
+  .mini-nav__links {
+    display: flex;
+    gap: 2cqi;
+  }
+
+  .mini-nav__links i {
+    width: 5cqi;
+    height: 1.1cqi;
+    border-radius: 99px;
+    background: var(--c-sand-deep);
+  }
+
+  .mini-nav__cta {
+    width: 9cqi;
+    height: 3.2cqi;
+    border-radius: 99px;
+    background: var(--c-accent);
+  }
+
+  .mini-hero {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 3cqi;
+    align-items: center;
+    margin-bottom: 3.4cqi;
+  }
+
+  .mini-hero__tag {
+    display: inline-block;
+    margin-bottom: 1.6cqi;
+    padding: 0.5cqi 1.6cqi;
+    border-radius: 99px;
+    background: var(--c-accent-soft);
+    color: var(--c-accent-deep);
+    font-size: 1.7cqi;
+    font-weight: 600;
+  }
+
+  .mini-hero__title {
+    font-family: var(--f-display);
+    font-size: 6.4cqi;
+    font-weight: 650;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    margin-bottom: 2.2cqi;
+  }
+
+  .mini-hero__line {
+    display: block;
+    height: 1.1cqi;
+    border-radius: 99px;
+    background: var(--c-sand-deep);
+    margin-bottom: 1cqi;
+  }
+
+  .mini-hero__line--short {
+    width: 65%;
+  }
+
+  .mini-hero__btn {
+    display: inline-block;
+    margin-top: 1.6cqi;
+    padding: 1.1cqi 2.6cqi;
+    border-radius: 99px;
+    background: var(--c-ink);
+    color: var(--c-bg);
+    font-size: 1.8cqi;
+    font-weight: 600;
+  }
+
+  .mini-hero__art {
+    position: relative;
+    aspect-ratio: 1 / 1.05;
+    border-radius: 1.6cqi;
+    background: linear-gradient(180deg, var(--c-sky), #e9eef6 70%);
+    overflow: hidden;
+  }
+
+  .art__sun {
+    position: absolute;
+    width: 42%;
+    aspect-ratio: 1;
+    top: 14%;
+    right: 14%;
+    border-radius: 50%;
+    background: var(--c-accent);
+    animation: sun 6s var(--ease-in-out) infinite alternate;
+  }
+
+  @keyframes sun {
+    to {
+      transform: translateY(12%);
+    }
+  }
+
+  .art__arch {
+    position: absolute;
+    bottom: 0;
+    border-radius: 999px 999px 0 0;
+  }
+
+  .art__arch--1 {
+    left: 8%;
+    width: 38%;
+    height: 58%;
+    background: var(--c-butter);
+  }
+
+  .art__arch--2 {
+    left: 30%;
+    width: 30%;
+    height: 40%;
+    background: var(--c-ink);
+  }
+
+  .art__hill {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    bottom: -18%;
+    height: 34%;
+    border-radius: 50%;
+    background: var(--c-mint);
+  }
+
+  .mini-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8cqi;
+  }
+
+  .mini-cards span {
+    height: 9cqi;
+    border-radius: 1.2cqi;
+    background: var(--bg);
+  }
+
+  /* ---------- Phone ---------- */
+  .hv__layer--phone {
+    left: -2%;
+    bottom: 4%;
+    width: 27%;
+  }
+
+  .phone {
+    position: relative;
+    padding: 1.4cqi;
+    border-radius: 5cqi;
+    background: var(--c-ink);
+    box-shadow: var(--shadow-lg);
+    transform: rotate(6deg);
+  }
+
+  .phone__notch {
+    position: absolute;
+    top: 2.4cqi;
+    left: 50%;
+    width: 7cqi;
+    height: 1.6cqi;
+    border-radius: 99px;
+    background: var(--c-ink);
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  .phone__screen {
+    display: grid;
+    gap: 1.3cqi;
+    padding: 5cqi 2cqi 2.6cqi;
+    border-radius: 3.8cqi;
+    background: var(--c-bg-raised);
+  }
+
+  .phone__art {
+    position: relative;
+    height: 17cqi;
+    border-radius: 2cqi;
+    background: var(--c-peach);
+    overflow: hidden;
+  }
+
+  .phone__circle {
+    position: absolute;
+    width: 11cqi;
+    height: 11cqi;
+    left: 12%;
+    bottom: -3cqi;
+    border-radius: 50%;
+    background: var(--c-accent);
+  }
+
+  .phone__square {
+    position: absolute;
+    width: 7cqi;
+    height: 7cqi;
+    right: 14%;
+    top: 22%;
+    border-radius: 1cqi;
+    background: var(--c-butter);
+    transform: rotate(18deg);
+    animation: spin-slow 14s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    to {
+      transform: rotate(378deg);
+    }
+  }
+
+  .phone__title {
+    height: 2.4cqi;
+    width: 80%;
+    border-radius: 99px;
+    background: var(--c-ink);
+  }
+
+  .phone__line {
+    height: 1cqi;
+    border-radius: 99px;
+    background: var(--c-sand-deep);
+  }
+
+  .phone__line--short {
+    width: 60%;
+  }
+
+  .phone__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2cqi;
+  }
+
+  .phone__row span {
+    height: 8cqi;
+    border-radius: 1.4cqi;
+    background: var(--c-mint);
+  }
+
+  .phone__row span + span {
+    background: var(--c-sky);
+  }
+
+  .phone__btn {
+    height: 3.6cqi;
+    border-radius: 99px;
+    background: var(--c-ink);
+  }
+
+  /* ---------- Chips ---------- */
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 1.8cqi;
+    padding: 1.8cqi 2.2cqi;
+    border-radius: 2cqi;
+    background: rgb(252 249 244 / 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+      0 0 0 1px rgb(28 27 24 / 0.07),
+      var(--shadow-md);
+  }
+
+  .chip__label {
+    font-size: 1.7cqi;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+
+  .hv__layer--palette {
+    right: -3%;
+    top: 5%;
+  }
+
+  .palette {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2cqi;
+    transform: rotate(4deg);
+  }
+
+  .palette__swatches {
+    display: flex;
+  }
+
+  .palette__swatches i {
+    width: 5.4cqi;
+    height: 5.4cqi;
+    border-radius: 50%;
+    background: var(--c);
+    box-shadow:
+      0 0 0 0.5cqi var(--c-bg-raised),
+      inset 0 0 0 1px rgb(28 27 24 / 0.08);
+  }
+
+  .palette__swatches i + i {
+    margin-left: -1.2cqi;
+  }
+
+  .hv__layer--type {
+    right: 0;
+    bottom: 14%;
+  }
+
+  .type {
+    transform: rotate(-3deg);
+  }
+
+  .type__aa {
+    font-family: var(--f-display);
+    font-size: 8cqi;
+    font-weight: 650;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--c-accent);
+  }
+
+  .type__meta {
+    display: grid;
+    gap: 0.4cqi;
+  }
+
+  .type__weights {
+    font-size: 2.2cqi;
+    color: var(--c-ink-2);
+  }
+
+  /* ---------- Badge ---------- */
+  .hv__layer--badge {
+    left: 30%;
+    bottom: -2%;
+    width: 21%;
+  }
+
+  .badge {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--c-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .badge__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: spin 22s linear infinite;
+  }
+
+  .badge__ring text {
+    font-family: var(--f-body);
+    font-size: 11.2px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    fill: var(--c-ink);
+  }
+
+  .badge__star {
+    position: absolute;
+    inset: 32%;
+    fill: var(--c-ink);
+    animation: spin 12s linear infinite reverse;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ---------- Cursor ---------- */
+  .hv__layer--cursor {
+    top: 44%;
+    left: 52%;
+  }
+
+  .cursor-tag {
+    display: flex;
+    align-items: flex-start;
+    animation: wander 11s var(--ease-in-out) infinite;
+  }
+
+  .cursor-tag__arrow {
+    width: 3.6cqi;
+    fill: var(--c-ink);
+    stroke: var(--c-bg-raised);
+    stroke-width: 1.4;
+    filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.2));
+  }
+
+  .cursor-tag__label {
+    margin-top: 2.6cqi;
+    padding: 0.7cqi 1.8cqi;
+    border-radius: 99px 99px 99px 0.4cqi;
+    background: var(--c-ink);
+    color: var(--c-bg);
+    font-size: 1.9cqi;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  @keyframes wander {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    30% {
+      transform: translate(-14cqi, -9cqi);
+    }
+    55% {
+      transform: translate(-6cqi, 6cqi);
+    }
+    80% {
+      transform: translate(8cqi, -3cqi);
+    }
+  }
+
+  /* ---------- Sparkles ---------- */
+  .hv__spark {
+    position: absolute;
+    fill: var(--c-accent);
+    animation: twinkle 4s var(--ease-in-out) infinite;
+  }
+
+  .hv__spark--1 {
+    width: 5cqi;
+    top: 4%;
+    left: 12%;
+  }
+
+  .hv__spark--2 {
+    width: 3.2cqi;
+    bottom: 22%;
+    right: 30%;
+    fill: var(--c-ink);
+    animation-delay: -2s;
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.55) rotate(45deg);
+      opacity: 0.6;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hv *,
+    .hv *::before {
+      animation: none !important;
+    }
+  }
+</style>

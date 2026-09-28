@@ -1,0 +1,430 @@
+---
+import Button from '../Button.astro';
+import HeroVisual from './HeroVisual.astro';
+import { projectMailto } from '../../data/site';
+
+/*
+ * The headline is split into words at build time so the reveal runs in pure CSS
+ * from first paint — no waiting for JavaScript, which keeps LCP fast.
+ */
+const headline: { text: string; accent?: boolean }[] = [
+  { text: 'Websites' },
+  { text: 'that' },
+  { text: 'make' },
+  { text: 'your' },
+  { text: 'business' },
+  { text: 'impossible', accent: true },
+  { text: 'to' },
+  { text: 'ignore.' },
+];
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__bg" aria-hidden="true">
+    <span class="hero__ring hero__ring--1"></span>
+    <span class="hero__ring hero__ring--2"></span>
+  </div>
+
+  <div class="hero__grid container">
+    <div class="hero__copy">
+      <div class="hero__meta">
+        <p class="hero__badge">
+          <span class="hero__pulse" aria-hidden="true"></span>
+          Now booking new projects
+        </p>
+        <p class="hero__intro">Independent web design<br /> &amp; development studio</p>
+      </div>
+
+      <h1 class="hero__title display-xl" id="hero-title">
+        {
+          headline.map((word, i) => (
+            <>
+              <span class:list={['hw-wrap', { 'hw-wrap--accent': word.accent }]}>
+                <span class="hw">
+                  <span class="hw__i" style={`--i:${i}`}>
+                    {word.text}
+                  </span>
+                </span>
+                {word.accent && (
+                  <svg class="hw__scribble" viewBox="0 0 320 24" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M3 16C60 6 132 3 196 6c44 2 82 6 121 12" />
+                  </svg>
+                )}
+              </span>{' '}
+            </>
+          ))
+        }
+      </h1>
+
+      <div class="hero__bottom">
+        <p class="hero__lede lede">
+          We design and develop exceptional digital experiences that turn ambitious businesses into unforgettable
+          brands.
+        </p>
+        <div class="hero__ctas">
+          <Button href="/#contact" size="lg" magnetic>Start Your Project</Button>
+          <Button href="/#work" variant="outline" size="lg">Explore Our Work</Button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual" data-parallax-hero>
+      <HeroVisual />
+    </div>
+  </div>
+
+  <div class="hero__foot container">
+    <a class="hero__scroll" href="/#services">
+      <span class="hero__scroll-line" aria-hidden="true"></span>
+      Scroll to explore
+    </a>
+    <ul role="list" class="hero__caps" aria-label="Capabilities">
+      <li>Design</li>
+      <li>Development</li>
+      <li>WordPress</li>
+      <li>E-commerce</li>
+    </ul>
+    <a class="hero__mail" href={projectMailto}>Say hello ↗</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    padding-top: calc(var(--header-h) + clamp(1.5rem, 4vw, 3.5rem));
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    isolation: isolate;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero__ring {
+    position: absolute;
+    border: 1px solid var(--c-line);
+    border-radius: 50%;
+  }
+
+  .hero__ring--1 {
+    width: 90vw;
+    height: 90vw;
+    left: -45vw;
+    top: 20vh;
+  }
+
+  .hero__ring--2 {
+    width: 60vw;
+    height: 60vw;
+    left: -30vw;
+    top: 35vh;
+    border-style: dashed;
+    animation: rotate 90s linear infinite;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+    flex: 1;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    animation: fade-up 0.9s var(--ease-out) 0.1s both;
+  }
+
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 1rem 0.45rem 0.7rem;
+    border-radius: var(--r-pill);
+    background: var(--c-bg-raised);
+    box-shadow:
+      0 0 0 1px var(--c-line),
+      var(--shadow-sm);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+
+  .hero__pulse {
+    position: relative;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: #2fa36b;
+  }
+
+  .hero__pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #2fa36b;
+    animation: pulse 2s var(--ease-out) infinite;
+  }
+
+  @keyframes pulse {
+    to {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+
+  .hero__intro {
+    font-size: var(--fs-sm);
+    line-height: 1.35;
+    color: var(--c-muted);
+    text-align: right;
+  }
+
+  /* Headline */
+  .hero__title {
+    font-weight: 650;
+    margin-bottom: clamp(1.5rem, 3vw, 2.6rem);
+    max-width: 12ch;
+  }
+
+  .hw {
+    position: relative;
+    display: inline-block;
+    overflow: clip;
+    overflow-clip-margin: 0.2em;
+    vertical-align: top;
+    padding-bottom: 0.06em;
+  }
+
+  .hw__i {
+    display: inline-block;
+    animation: word-up 1.1s var(--ease-out) both;
+    animation-delay: calc(0.15s + var(--i) * 0.07s);
+  }
+
+  .hw-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .hw-wrap--accent .hw__i {
+    color: var(--c-accent);
+  }
+
+  .hw__scribble {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.02em;
+    width: 100%;
+    height: 0.2em;
+    overflow: visible;
+  }
+
+  .hw__scribble path {
+    fill: none;
+    stroke: var(--c-ink);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 340;
+    stroke-dashoffset: 340;
+    animation: draw 1.1s var(--ease-out) 1.05s forwards;
+  }
+
+  @keyframes word-up {
+    from {
+      transform: translate3d(0, 105%, 0) rotate(4deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .hero__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.6rem 2.5rem;
+    animation: fade-up 1s var(--ease-out) 0.75s both;
+  }
+
+  .hero__lede {
+    max-width: 30ch;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .hero__visual {
+    position: relative;
+    max-width: 640px;
+    width: 100%;
+    justify-self: end;
+  }
+
+  /* Foot bar */
+  .hero__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--c-line);
+    font-size: var(--fs-sm);
+    color: var(--c-ink-2);
+    animation: fade-up 1s var(--ease-out) 1.1s both;
+  }
+
+  .hero__scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 500;
+  }
+
+  .hero__scroll-line {
+    position: relative;
+    width: 2.6rem;
+    height: 1px;
+    background: var(--c-line-strong);
+    overflow: hidden;
+  }
+
+  .hero__scroll-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--c-accent);
+    animation: scan 2.2s var(--ease-in-out) infinite;
+  }
+
+  @keyframes scan {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  .hero__caps {
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  .hero__caps li {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  .hero__caps li + li::before {
+    content: '✦';
+    font-size: 0.6rem;
+    color: var(--c-accent);
+    margin-left: -0.8rem;
+    margin-right: -0.8rem;
+  }
+
+  .hero__mail {
+    font-weight: 600;
+    transition: color var(--dur-fast);
+  }
+
+  .hero__mail:hover {
+    color: var(--c-accent-deep);
+  }
+
+  @media (max-width: 1100px) {
+    .hero__caps {
+      display: none;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero {
+      min-height: auto;
+    }
+
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__title {
+      max-width: 12ch;
+    }
+
+    .hero__visual {
+      justify-self: center;
+      max-width: 560px;
+      margin-top: 1rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hero__intro {
+      display: none;
+    }
+
+    .hero__ctas {
+      width: 100%;
+    }
+
+    .hero__ctas :global(.btn) {
+      flex: 1 1 100%;
+      justify-content: space-between;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero *,
+    .hero *::before,
+    .hero *::after {
+      animation: none !important;
+    }
+
+    .hw__scribble path {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

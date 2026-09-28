@@ -1,0 +1,246 @@
+---
+import { processSteps } from '../../data/site';
+---
+
+<section class="section process" id="process" aria-labelledby="process-title">
+  <div class="process__panel">
+    <div class="container">
+      <header class="process__head">
+        <p class="eyebrow" data-reveal>Our process</p>
+        <h2 class="display-lg" id="process-title" data-split>
+          Four clear steps. <span class="process__muted">Zero guesswork.</span>
+        </h2>
+        <p class="process__lede" data-reveal>
+          A calm, transparent process with a checkpoint at every stage — so you always know what is happening, what is
+          next and what we need from you.
+        </p>
+      </header>
+
+      <ol role="list" class="timeline" data-timeline>
+        <span class="timeline__track" aria-hidden="true"><span class="timeline__progress" data-timeline-progress></span></span>
+        {
+          processSteps.map((step, i) => (
+            <li class="step" data-step style={`--i:${i}`}>
+              <span class="step__node" aria-hidden="true">
+                <span />
+              </span>
+              <span class="step__num" aria-hidden="true">
+                {step.number}
+              </span>
+              <h3 class="step__title">
+                <span class="sr-only">Step {step.number}: </span>
+                {step.title}
+              </h3>
+              <p class="step__text">{step.text}</p>
+              <ul role="list" class="step__outputs" aria-label={`${step.title} deliverables`}>
+                {step.outputs.map((o) => (
+                  <li>{o}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    padding-block: 0;
+  }
+
+  .process__panel {
+    position: relative;
+    margin-inline: clamp(0.5rem, 1.5vw, 1.5rem);
+    padding-block: var(--section-y);
+    border-radius: clamp(1.4rem, 3vw, 2.6rem);
+    background:
+      radial-gradient(60% 80% at 100% 0%, rgb(255 217 196 / 0.7), transparent 60%),
+      radial-gradient(50% 70% at 0% 100%, rgb(207 231 214 / 0.7), transparent 60%),
+      var(--c-sand);
+    overflow: hidden;
+  }
+
+  .process__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas:
+      'eyebrow eyebrow'
+      'title lede';
+    align-items: end;
+    gap: 1.4rem clamp(2rem, 6vw, 6rem);
+    margin-bottom: clamp(3.5rem, 8vw, 7rem);
+  }
+
+  .process__head .eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .process__head h2 {
+    grid-area: title;
+    max-width: 14ch;
+  }
+
+  .process__muted {
+    color: var(--c-muted);
+  }
+
+  .process__lede {
+    grid-area: lede;
+    color: var(--c-ink-2);
+    max-width: 40ch;
+  }
+
+  /* Horizontal timeline (desktop) */
+  .timeline {
+    --node: 1.25rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.2rem, 3vw, 3rem);
+  }
+
+  .timeline__track {
+    position: absolute;
+    top: calc(var(--node) / 2);
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--c-line-strong);
+    border-radius: 2px;
+  }
+
+  .timeline__progress {
+    position: absolute;
+    inset: 0;
+    background: var(--c-accent);
+    transform-origin: left center;
+    transform: scaleX(1);
+  }
+
+  :global(.motion) .timeline__progress {
+    transform: scaleX(0);
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 0.8rem;
+  }
+
+  .step__node {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--node);
+    height: var(--node);
+    margin-bottom: 1.6rem;
+    border-radius: 50%;
+    background: var(--c-sand);
+    box-shadow: inset 0 0 0 2px var(--c-ink);
+  }
+
+  .step__node span {
+    width: 45%;
+    height: 45%;
+    border-radius: 50%;
+    background: var(--c-accent);
+    transform: scale(1);
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  :global(.motion) .step:not(:global(.is-active)) .step__node span {
+    transform: scale(0);
+  }
+
+  .step__num {
+    font-family: var(--f-display);
+    font-size: clamp(3.5rem, 2rem + 4vw, 6.5rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--c-ink);
+    transition:
+      color 0.6s var(--ease-out),
+      -webkit-text-stroke-color 0.6s var(--ease-out);
+  }
+
+  .step:hover .step__num,
+  .step:global(.is-active) .step__num {
+    color: var(--c-accent);
+    -webkit-text-stroke-color: var(--c-accent);
+  }
+
+  .step__title {
+    font-size: var(--fs-2xl);
+    letter-spacing: -0.035em;
+    margin-top: 0.6rem;
+  }
+
+  .step__text {
+    color: var(--c-ink-2);
+    max-width: 32ch;
+  }
+
+  .step__outputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .step__outputs li {
+    padding: 0.25rem 0.7rem;
+    border-radius: var(--r-pill);
+    background: rgb(252 249 244 / 0.7);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    box-shadow: 0 0 0 1px var(--c-line);
+  }
+
+  @media (max-width: 1000px) {
+    .process__head {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'eyebrow'
+        'title'
+        'lede';
+    }
+  }
+
+  /* Vertical timeline (tablet & mobile) */
+  @media (max-width: 860px) {
+    .timeline {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding-left: 2.6rem;
+    }
+
+    .timeline__track {
+      top: 0.4rem;
+      bottom: 0;
+      left: calc(var(--node) / 2 - 1px);
+      right: auto;
+      width: 2px;
+      height: auto;
+    }
+
+    .timeline__progress {
+      transform-origin: center top;
+    }
+
+    :global(.motion) .timeline__progress {
+      transform: scaleY(0);
+    }
+
+    .step__node {
+      position: absolute;
+      left: -2.6rem;
+      top: 0.4rem;
+      margin: 0;
+    }
+  }
+</style>

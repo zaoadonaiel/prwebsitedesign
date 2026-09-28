@@ -1,0 +1,91 @@
+/* Layout primitives and shared typographic patterns */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+  scroll-margin-top: var(--header-h);
+}
+
+/* Small uppercase label that opens most sections */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--f-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-ink-2);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--c-accent);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  flex: none;
+}
+
+.display-xl {
+  font-size: var(--fs-4xl);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+.display-lg {
+  font-size: var(--fs-3xl);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.lede {
+  font-size: var(--fs-lg);
+  line-height: 1.55;
+  color: var(--c-ink-2);
+  max-width: 34ch;
+}
+
+.accent-text {
+  color: var(--c-accent-deep);
+}
+
+/* Words produced by the heading splitter */
+.split-word {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.split-word > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/*
+ * Progressive enhancement: elements start hidden only when JS is running AND
+ * the visitor has not asked for reduced motion (`.motion` set in <head>).
+ */
+.motion [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+.motion [data-split] {
+  visibility: hidden;
+}
+
+.motion [data-split].is-split {
+  visibility: visible;
+}

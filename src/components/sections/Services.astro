@@ -1,0 +1,256 @@
+---
+import { ArrowUpRight } from '@lucide/astro';
+import ServiceGlyph from '../ServiceGlyph.astro';
+import { services } from '../../data/site';
+---
+
+<section class="section services" id="services" aria-labelledby="services-title">
+  <div class="container">
+    <header class="services__head">
+      <div class="services__head-main">
+        <p class="eyebrow" data-reveal>What we do</p>
+        <h2 class="display-lg" id="services-title" data-split>
+          Everything your website needs, <span class="accent-text">crafted in-house.</span>
+        </h2>
+      </div>
+      <div class="services__head-aside" data-reveal>
+        <p class="lede">
+          From the first sketch to years of care after launch — one senior team handles strategy, design and code, so
+          nothing gets lost in translation.
+        </p>
+        <a class="services__link" href="/#contact">
+          Tell us what you need
+          <ArrowUpRight size={18} aria-hidden="true" />
+        </a>
+      </div>
+    </header>
+
+    <ol role="list" class="services__list">
+      {
+        services.map((service, i) => (
+          <li class="service" style={`--tint:${service.tint}`} data-reveal>
+            <span class="service__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="service__title">{service.title}</h3>
+            <div class="service__body">
+              <p class="service__desc">{service.description}</p>
+              <ul role="list" class="service__tags">
+                {service.tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="service__glyph">
+              <ServiceGlyph name={service.glyph} />
+            </div>
+            <span class="service__arrow" aria-hidden="true">
+              <ArrowUpRight size={22} />
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-top: calc(var(--section-y) * 0.9);
+  }
+
+  .services__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 2rem clamp(2rem, 6vw, 7rem);
+    margin-bottom: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .services__head .eyebrow {
+    margin-bottom: 1.4rem;
+  }
+
+  .services__head h2 {
+    max-width: 14ch;
+  }
+
+  .services__head-aside {
+    display: grid;
+    gap: 1.6rem;
+    justify-items: start;
+  }
+
+  .services__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    padding-bottom: 0.2rem;
+    background: linear-gradient(var(--c-accent), var(--c-accent)) 0 100% / 100% 1.5px no-repeat;
+    transition: background-size 0.5s var(--ease-out);
+  }
+
+  .services__link:hover {
+    background-size: 0% 1.5px;
+    background-position: 100% 100%;
+  }
+
+  .services__link :global(svg) {
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .services__link:hover :global(svg) {
+    transform: rotate(45deg);
+  }
+
+  /* Interactive editorial list */
+  .services__list {
+    border-top: 1px solid var(--c-line-strong);
+  }
+
+  .service {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1.25fr) minmax(0, 1fr) 5.5rem 3.4rem;
+    align-items: center;
+    gap: 1.5rem clamp(1.2rem, 2.5vw, 2.5rem);
+    padding: clamp(1.6rem, 2.6vw, 2.4rem) clamp(0.5rem, 1.5vw, 1.5rem);
+    border-bottom: 1px solid var(--c-line-strong);
+  }
+
+  /* Tinted panel that rises on hover */
+  .service::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--tint);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .service:hover::before {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+
+  .service__num {
+    font-family: var(--f-display);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--c-muted);
+    align-self: start;
+    padding-top: 0.6rem;
+  }
+
+  .service__title {
+    font-size: var(--fs-2xl);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .service:hover .service__title {
+    transform: translateX(0.6rem);
+  }
+
+  .service__desc {
+    color: var(--c-ink-2);
+    max-width: 42ch;
+    margin-bottom: 0.9rem;
+  }
+
+  .service__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .service__tags li {
+    padding: 0.2rem 0.7rem;
+    border: 1px solid var(--c-line-strong);
+    border-radius: var(--r-pill);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    color: var(--c-ink-2);
+  }
+
+  .service__glyph {
+    width: 4.5rem;
+    height: 4.5rem;
+    justify-self: center;
+  }
+
+  .service__arrow {
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 50%;
+    border: 1px solid var(--c-line-strong);
+    transition:
+      transform 0.6s var(--ease-out),
+      background-color 0.4s var(--ease-out),
+      color 0.4s var(--ease-out),
+      border-color 0.4s var(--ease-out);
+  }
+
+  .service:hover .service__arrow {
+    transform: rotate(45deg);
+    background: var(--c-ink);
+    border-color: var(--c-ink);
+    color: var(--c-bg);
+  }
+
+  @media (max-width: 1100px) {
+    .service {
+      grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1fr) 4.5rem;
+    }
+
+    .service__arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .services__head {
+      grid-template-columns: 1fr;
+    }
+
+    .service {
+      grid-template-columns: minmax(0, 1fr) 3.6rem;
+      grid-template-areas:
+        'num glyph'
+        'title glyph'
+        'body body';
+      gap: 0.6rem 1rem;
+      padding-inline: 0;
+    }
+
+    .service::before {
+      inset: 0 calc(var(--gutter) * -1);
+    }
+
+    .service__num {
+      grid-area: num;
+      padding-top: 0;
+    }
+
+    .service__title {
+      grid-area: title;
+    }
+
+    .service__body {
+      grid-area: body;
+      margin-top: 0.4rem;
+    }
+
+    .service__glyph {
+      grid-area: glyph;
+      width: 3.4rem;
+      height: 3.4rem;
+      align-self: center;
+    }
+  }
+</style>

@@ -1,0 +1,327 @@
+---
+import {
+  FingerprintPattern,
+  MonitorSmartphone,
+  Zap,
+  MousePointerClick,
+  SearchCheck,
+  MessagesSquare,
+} from '@lucide/astro';
+import Button from '../Button.astro';
+import { principles } from '../../data/site';
+
+const icons = {
+  unique: FingerprintPattern,
+  responsive: MonitorSmartphone,
+  performance: Zap,
+  friendly: MousePointerClick,
+  seo: SearchCheck,
+  support: MessagesSquare,
+} as const;
+
+const tints = ['var(--c-peach)', 'var(--c-sky)', 'var(--c-butter)', 'var(--c-mint)', 'var(--c-blush)', 'var(--c-sand-deep)'];
+---
+
+<section class="section why" id="about" aria-labelledby="why-title">
+  <div class="container">
+    <div class="why__intro">
+      <p class="eyebrow" data-reveal>Why PR Website Design</p>
+      <h2 class="sr-only" id="why-title">Why choose PR Website Design</h2>
+      <p class="why__statement" data-scrub-text>
+        We are a small, senior studio that treats every website like a flagship product — designed from a blank
+        canvas, engineered for speed, and cared for long after launch day.
+      </p>
+    </div>
+
+    <div class="why__layout">
+      <aside class="why__aside">
+        <div class="orbit" aria-hidden="true" data-orbit>
+          <span class="orbit__ring orbit__ring--1"><i style="--c: var(--c-accent)"></i></span>
+          <span class="orbit__ring orbit__ring--2"><i style="--c: var(--c-mint)"></i><i style="--c: var(--c-butter)"></i></span>
+          <span class="orbit__ring orbit__ring--3"><i style="--c: var(--c-sky)"></i><i style="--c: var(--c-peach)"></i></span>
+          <span class="orbit__core">
+            <svg viewBox="0 0 40 40">
+              <path d="M13 29.5V11h8.2a6 6 0 0 1 0 12H13" fill="none" stroke="var(--c-bg)" stroke-width="4" stroke-linejoin="round"></path>
+              <path d="M21 23l7.5 7.5" fill="none" stroke="var(--c-accent)" stroke-width="4" stroke-linecap="round"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="why__aside-copy" data-reveal>
+          <p>
+            Six promises that shape every project we take on — whether it is a five-page brochure site or a full
+            online store.
+          </p>
+          <Button href="/#contact" variant="accent">Let's Talk</Button>
+        </div>
+      </aside>
+
+      <ol role="list" class="why__grid">
+        {
+          principles.map((item, i) => {
+            const Icon = icons[item.glyph];
+            return (
+              <li class="principle" style={`--tint:${tints[i]}`} data-reveal>
+                <div class="principle__top">
+                  <span class="principle__icon" aria-hidden="true">
+                    <Icon size={26} stroke-width={1.6} />
+                  </span>
+                  <span class="principle__num">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <h3 class="principle__title">{item.title}</h3>
+                <p class="principle__text">{item.text}</p>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why {
+    background: linear-gradient(180deg, var(--c-bg) 0%, var(--c-bg-raised) 30%, var(--c-bg-raised) 70%, var(--c-bg) 100%);
+  }
+
+  .why__intro {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: clamp(4rem, 9vw, 8rem);
+  }
+
+  .why__statement {
+    font-family: var(--f-display);
+    font-size: clamp(1.8rem, 1rem + 3.4vw, 4.4rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    max-width: 24ch;
+    text-wrap: balance;
+  }
+
+  /* Words get this class from the scrub script */
+  .why__statement :global(.scrub-word) {
+    color: rgb(28 27 24 / 0.16);
+  }
+
+  .why__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .why__aside {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    display: grid;
+    gap: 2.2rem;
+  }
+
+  .why__aside-copy {
+    display: grid;
+    gap: 1.4rem;
+    justify-items: start;
+    color: var(--c-ink-2);
+    max-width: 34ch;
+  }
+
+  /* Orbit illustration */
+  .orbit {
+    position: relative;
+    width: min(100%, 360px);
+    aspect-ratio: 1;
+  }
+
+  .orbit__ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid var(--c-line-strong);
+    animation: orbit 24s linear infinite;
+  }
+
+  .orbit__ring--1 {
+    inset: 28%;
+    animation-duration: 12s;
+  }
+
+  .orbit__ring--2 {
+    inset: 14%;
+    border-style: dashed;
+    animation-duration: 20s;
+    animation-direction: reverse;
+  }
+
+  .orbit__ring--3 {
+    inset: 0;
+    animation-duration: 32s;
+  }
+
+  .orbit__ring i {
+    position: absolute;
+    top: -0.9rem;
+    left: calc(50% - 0.9rem);
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: var(--c);
+    box-shadow:
+      0 0 0 1px rgb(28 27 24 / 0.08),
+      var(--shadow-sm);
+  }
+
+  .orbit__ring i + i {
+    top: auto;
+    bottom: -0.9rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    left: calc(50% - 0.6rem);
+  }
+
+  .orbit__ring--1 i {
+    width: 1.1rem;
+    height: 1.1rem;
+    top: -0.55rem;
+    left: calc(50% - 0.55rem);
+  }
+
+  .orbit__core {
+    position: absolute;
+    inset: 38%;
+    display: grid;
+    place-items: center;
+    border-radius: 28%;
+    background: var(--c-ink);
+    box-shadow: var(--shadow-lg);
+    animation: breathe 5s var(--ease-in-out) infinite alternate;
+  }
+
+  .orbit__core svg {
+    width: 70%;
+  }
+
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes breathe {
+    to {
+      transform: scale(1.08) rotate(-6deg);
+    }
+  }
+
+  /* Principles grid — hairline editorial grid rather than floating cards */
+  .why__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--c-line-strong);
+    border-left: 1px solid var(--c-line-strong);
+  }
+
+  .principle {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-content: start;
+    gap: 0.9rem;
+    padding: clamp(1.5rem, 3vw, 2.6rem);
+    border-right: 1px solid var(--c-line-strong);
+    border-bottom: 1px solid var(--c-line-strong);
+    overflow: hidden;
+  }
+
+  .principle::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 14rem;
+    height: 14rem;
+    right: -5rem;
+    top: -5rem;
+    border-radius: 50%;
+    background: var(--tint);
+    transform: scale(0);
+    transition: transform 0.9s var(--ease-out);
+  }
+
+  .principle:hover::before {
+    transform: scale(3);
+  }
+
+  .principle__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+  }
+
+  .principle__icon {
+    display: grid;
+    place-items: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    background: var(--tint);
+    border-radius: 42% 58% 55% 45% / 50% 42% 58% 50%;
+    transition:
+      border-radius 0.9s var(--ease-out),
+      transform 0.9s var(--ease-out),
+      background-color 0.5s var(--ease-out);
+  }
+
+  .principle:hover .principle__icon {
+    border-radius: 58% 42% 40% 60% / 42% 60% 40% 58%;
+    transform: rotate(-12deg) scale(1.08);
+    background: var(--c-bg-raised);
+  }
+
+  .principle__num {
+    font-family: var(--f-display);
+    font-size: 0.95rem;
+    color: var(--c-muted);
+  }
+
+  .principle__title {
+    font-size: var(--fs-xl);
+    letter-spacing: -0.03em;
+  }
+
+  .principle__text {
+    color: var(--c-ink-2);
+    max-width: 38ch;
+  }
+
+  @media (max-width: 960px) {
+    .why__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .why__aside {
+      position: static;
+      grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .why__aside {
+      grid-template-columns: 1fr;
+    }
+
+    .orbit {
+      width: 220px;
+    }
+
+    .why__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit__ring,
+    .orbit__core {
+      animation: none;
+    }
+  }
+</style>
