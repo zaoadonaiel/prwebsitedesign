@@ -1,7 +1,7 @@
 ---
 import { ArrowUp } from '@lucide/astro';
 import Logo from './Logo.astro';
-import { navLinks, projectMailto, services, site, socials } from '../data/site';
+import { navLinks, projectMailto, services, site } from '../data/site';
 
 const year = new Date().getFullYear();
 ---
@@ -57,18 +57,6 @@ const year = new Date().getFullYear();
               {site.address.city}, {site.address.postalCode}
             </address>
           </li>
-        </ul>
-        <h3 class="footer__heading footer__heading--social">Follow</h3>
-        <ul role="list" class="footer__socials">
-          {
-            socials.map((s) => (
-              <li>
-                <a href={s.href} rel="noopener">
-                  {s.label}
-                </a>
-              </li>
-            ))
-          }
         </ul>
       </div>
     </div>
@@ -141,10 +129,6 @@ const year = new Date().getFullYear();
     margin-bottom: 1.1rem;
   }
 
-  .footer__heading--social {
-    margin-top: 2rem;
-  }
-
   .footer__col ul {
     display: grid;
     gap: 0.55rem;
@@ -167,11 +151,6 @@ const year = new Date().getFullYear();
     font-style: normal;
     line-height: 1.5;
     color: var(--c-ink-2);
-  }
-
-  .footer__socials {
-    grid-template-columns: repeat(2, max-content);
-    column-gap: 1.4rem !important;
   }
 
   /* Giant wordmark */
